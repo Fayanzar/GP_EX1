@@ -6,18 +6,18 @@ TemplateSimulator::TemplateSimulator()
 	m_vfMovableObjectPos = Vec3();
 	m_vfMovableObjectFinalPos = Vec3();
 	m_vfRotate = Vec3();
-	m_iNumSpheres    = 100;
-	m_fSphereSize    = 0.05f;
+	m_iNumSpheres = 100;
+	m_fSphereSize = 0.05f;
 }
 
-const char * TemplateSimulator::getTestCasesStr(){
+const char * TemplateSimulator::getTestCasesStr() {
 	return "Teapot,Random Objects,Triangle";
 }
 
-void TemplateSimulator::reset(){
-		m_mouse.x = m_mouse.y = 0;
-		m_trackmouse.x = m_trackmouse.y = 0;
-		m_oldtrackmouse.x = m_oldtrackmouse.y = 0;
+void TemplateSimulator::reset() {
+	m_mouse.x = m_mouse.y = 0;
+	m_trackmouse.x = m_trackmouse.y = 0;
+	m_oldtrackmouse.x = m_oldtrackmouse.y = 0;
 }
 
 void TemplateSimulator::initUI(DrawingUtilitiesClass * DUC)
@@ -103,20 +103,20 @@ void TemplateSimulator::simulateTimestep(float timeStep)
 
 void TemplateSimulator::drawSomeRandomObjects()
 {
-    std::mt19937 eng;
-    std::uniform_real_distribution<float> randCol( 0.0f, 1.0f);
-    std::uniform_real_distribution<float> randPos(-0.5f, 0.5f);
-    for (int i=0; i<m_iNumSpheres; i++)
-    {
-		DUC->setUpLighting(Vec3(),0.4*Vec3(1,1,1),100,0.6*Vec3(randCol(eng),randCol(eng), randCol(eng)));
-		DUC->drawSphere(Vec3(randPos(eng),randPos(eng),randPos(eng)),Vec3(m_fSphereSize, m_fSphereSize, m_fSphereSize));
-    }
+	std::mt19937 eng;
+	std::uniform_real_distribution<float> randCol(0.0f, 1.0f);
+	std::uniform_real_distribution<float> randPos(-0.5f, 0.5f);
+	for (int i = 0; i < m_iNumSpheres; i++)
+	{
+		DUC->setUpLighting(Vec3(), 0.4*Vec3(1, 1, 1), 100, 0.6*Vec3(randCol(eng), randCol(eng), randCol(eng)));
+		DUC->drawSphere(Vec3(randPos(eng), randPos(eng), randPos(eng)), Vec3(m_fSphereSize, m_fSphereSize, m_fSphereSize));
+	}
 }
 
 void TemplateSimulator::drawMovableTeapot()
 {
-	DUC->setUpLighting(Vec3(),0.4*Vec3(1,1,1),100,0.6*Vec3(0.97,0.86,1));
-	DUC->drawTeapot(m_vfMovableObjectPos,m_vfRotate,Vec3(0.5,0.5,0.5));
+	DUC->setUpLighting(Vec3(), 0.4*Vec3(1, 1, 1), 100, 0.6*Vec3(0.97, 0.86, 1));
+	DUC->drawTeapot(m_vfMovableObjectPos, m_vfRotate, Vec3(0.5, 0.5, 0.5));
 }
 
 void TemplateSimulator::drawTriangle()
@@ -126,11 +126,11 @@ void TemplateSimulator::drawTriangle()
 
 void TemplateSimulator::drawFrame(ID3D11DeviceContext* pd3dImmediateContext)
 {
-	switch(m_iTestCase)
+	switch (m_iTestCase)
 	{
-	case 0: drawMovableTeapot();break;
-	case 1: drawSomeRandomObjects();break;
-	case 2: drawTriangle();break;
+	case 0: drawMovableTeapot(); break;
+	case 1: drawSomeRandomObjects(); break;
+	case 2: drawTriangle(); break;
 	}
 }
 
