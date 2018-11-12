@@ -118,9 +118,6 @@ void MassSpringSystemSimulator::externalForcesCalculations(float timeElapsed)
 }
 
 void MassSpringSystemSimulator::notifyMethodChanged(int method) {
-	if (m_iTestCase > 0) {
-		notifyCaseChanged(m_iTestCase);
-	}
 	setIntegrator(method);
 }
 
