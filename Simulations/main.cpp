@@ -63,7 +63,7 @@ void initTweakBar(){
 	TwType TW_TYPE_METHOD = TwDefineEnumFromString("Change Method", "Euler,Midpoint");
 	TwAddVarRW(g_pDUC->g_pTweakBar, "Change Method", TW_TYPE_METHOD, &g_iMethod, "");
 	// HINT: For buttons you can directly pass the callback function as a lambda expression.
-	TwAddButton(g_pDUC->g_pTweakBar, "Reset Scene", [](void * s) { g_iPreTestCase = -1; g_iPreMethod = -1; g_iMethod = 0; }, nullptr, "");
+	TwAddButton(g_pDUC->g_pTweakBar, "Reset Scene", [](void * s) { g_iPreTestCase = -1; }, nullptr, "");
 	TwAddButton(g_pDUC->g_pTweakBar, "Reset Camera", [](void * s){g_pDUC->g_camera.Reset();}, nullptr,"");
 	// Run mode, step by step, control by space key
 	TwAddVarRW(g_pDUC->g_pTweakBar, "RunStep", TW_TYPE_BOOLCPP, &g_bSimulateByStep, "");
