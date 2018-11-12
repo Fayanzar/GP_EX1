@@ -40,12 +40,14 @@ using namespace GamePhysics;
 
 DrawingUtilitiesClass * g_pDUC;
 Simulator * g_pSimulator;
-float 	g_fTimestep = 0.001;
+float 	g_fTimestep = 0.005;
 #ifdef ADAPTIVESTEP
 float   g_fTimeFactor = 1;
 #endif
 bool  g_bDraw = true;
+int g_iPreMethod = -1;
 int g_iTestCase = 0;
+int g_iMethod = 0;
 int g_iPreTestCase = -1;
 bool  g_bSimulateByStep = false;
 bool firstTime = true;
@@ -58,8 +60,10 @@ void initTweakBar(){
 	TwDefine(" TweakBar color='0 128 128' alpha=128 ");
 	TwType TW_TYPE_TESTCASE = TwDefineEnumFromString("Test Scene", g_pSimulator->getTestCasesStr());
 	TwAddVarRW(g_pDUC->g_pTweakBar, "Test Scene", TW_TYPE_TESTCASE, &g_iTestCase, "");
+	TwType TW_TYPE_METHOD = TwDefineEnumFromString("Change Method", "Euler,Midpoint");
+	TwAddVarRW(g_pDUC->g_pTweakBar, "Change Method", TW_TYPE_METHOD, &g_iMethod, "");
 	// HINT: For buttons you can directly pass the callback function as a lambda expression.
-	TwAddButton(g_pDUC->g_pTweakBar, "Reset Scene", [](void * s){ g_iPreTestCase = -1; }, nullptr, "");
+	TwAddButton(g_pDUC->g_pTweakBar, "Reset Scene", [](void * s) { g_iPreTestCase = -1; g_iPreMethod = -1; g_iMethod = 0; }, nullptr, "");
 	TwAddButton(g_pDUC->g_pTweakBar, "Reset Camera", [](void * s){g_pDUC->g_camera.Reset();}, nullptr,"");
 	// Run mode, step by step, control by space key
 	TwAddVarRW(g_pDUC->g_pTweakBar, "RunStep", TW_TYPE_BOOLCPP, &g_bSimulateByStep, "");
@@ -251,6 +255,16 @@ void CALLBACK OnFrameMove( double dTime, float fElapsedTime, void* pUserContext 
 		g_pSimulator->notifyCaseChanged(g_iTestCase);
 		g_pSimulator->initUI(g_pDUC);
 		g_iPreTestCase = g_iTestCase;
+	}
+	if (g_iPreMethod != g_iMethod) {
+		if (g_pDUC->g_pTweakBar != nullptr) {
+			TwDeleteBar(g_pDUC->g_pTweakBar);
+			g_pDUC->g_pTweakBar = nullptr;
+		}
+		initTweakBar();
+		g_pSimulator->notifyMethodChanged(g_iMethod);
+		g_pSimulator->initUI(g_pDUC);
+		g_iPreMethod = g_iMethod;
 	}
 	if(!g_bSimulateByStep){
 #ifdef ADAPTIVESTEP

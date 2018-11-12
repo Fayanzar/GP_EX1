@@ -20,6 +20,7 @@ class Simulator{
 public:
 	// Attributes
 	int m_iTestCase;
+	int m_iMethod;
 	DrawingUtilitiesClass * DUC;
 	// Functions
 	
@@ -58,6 +59,7 @@ public:
 	*/
 	virtual void notifyCaseChanged(int testCase) = 0;
 
+	virtual void notifyMethodChanged(int method) = 0;
 	/*
 	this function is used to receive the input from the mouse
 	input x,y: the click position in pixels
